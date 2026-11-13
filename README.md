@@ -1,4 +1,4 @@
-<h1 align="center">🧠 AffectAgent</h1>
+<h1 align="center"><img src="assets/affectagent-logo.png" alt="AffectAgent logo" width="48" height="48" align="absmiddle"> AffectAgent</h1>
 
 <h3 align="center">Collaborative Multi-Agent Reasoning for Retrieval-Augmented Multimodal Emotion Recognition</h3>
 
