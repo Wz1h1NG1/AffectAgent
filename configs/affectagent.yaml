@@ -1,0 +1,130 @@
+## AffectAgent multimodal configuration.
+## Supply the AffectGPT checkpoint (SFT stage) or the role-specific SFT checkpoint
+## (MAPPO / evaluation) through:
+##   --options model.ckpt_3=/absolute/path/to/checkpoint.pth
+
+model:
+  arch: affectgpt
+  model_type: pretrain_vicuna
+
+  # AffectGPT training flags.  The AffectAgent SFT and MAPPO stages freeze the audiovisual
+  # encoders, Q-Formers and projectors (affectagent/modeling.py) and train only the LoRA
+  # adapters, RAAF, MB-MoE and the Critic, so the perceptual token store stays valid.
+  frozen_video_proj: False
+  frozen_video_Qformer: False
+  frozen_audio_Qformer: False
+  frozen_audio_proj: False
+  frozen_multi_Qformer: False
+  frozen_multi_llama_proj: False
+  frozen_llm: False
+
+  multi_fusion_type: attention
+  video_fusion_type: attention
+  audio_fusion_type: attention
+  image_fusion_type: mean
+
+  # AffectGPT
+  ckpt:   ""
+  ckpt_2: ""
+  ckpt_3: ""
+
+  # Other pre-trained models
+  llama_model: "Qwen25"            # Vicuna
+  acoustic_encoder: "HUBERT_LARGE" # IMAGEBIND
+  visual_encoder: "CLIP_VIT_LARGE" # EVA_CLIP_G
+
+  num_audio_query_token: 1
+  num_video_query_token: 1
+  num_multi_query_token: 1
+  num_image_query_token: 1
+
+  max_length: 1024
+
+  vis_processor:
+    train:
+      name: "alpro_video_train"
+      n_frms: 8
+      image_size: 224
+  text_processor:
+    train:
+      name: "blip_caption"
+  img_processor:
+    train:
+      name: "blip2_image_train"
+      image_size: 224
+  
+
+datasets:
+
+  mercaptionplus:
+    data_type: video
+    face_or_frame: 'multiframe_audio_frame_text'
+    label_type: 'hybird' # Upstream AffectGPT spelling retained for compatibility.
+
+
+# 1. 采用大batch + 三个 80g gpu
+run:
+
+  task: video_text_pretrain
+
+  # optimizer
+  lr_sched: "linear_warmup_cosine_lr"
+  init_lr: 1e-5
+  min_lr: 1e-5
+  warmup_lr: 1e-6
+  weight_decay: 0.05
+
+  max_epoch: 3
+  iters_per_epoch: 5000
+  warmup_steps: 500
+
+  batch_size_train: 3
+  batch_size_eval: 3
+
+  seed: 42
+  num_workers: 4
+
+  amp: True
+  resume_ckpt_path: null
+
+  evaluate: False 
+  train_splits: ["train"]
+
+  device: "cuda" 
+  world_size: 1
+  dist_url: "env://"
+  distributed: False
+
+
+# 这部分放的是 inference 相关的
+inference:
+
+  task: video_text_pretrain
+
+  vis_processor:
+    train:
+      name: "alpro_video_eval"
+      n_frms: 8
+      image_size: 224
+  text_processor:
+    train:
+      name: "blip_caption"
+  img_processor:
+    train:
+      name: "blip2_image_eval"
+      image_size: 224
+
+  ######################################################
+  # NOTE: 为了避免出错，设置为与 emercoarse 或者 mer2023 一致就可以
+  face_or_frame: 'multiframe_audio_frame_text'
+  ######################################################
+
+  base_root: 'output/results'
+  
+  # inference ckpt
+  ckpt_root: ""
+  ckpt_name: ""
+  test_epoch: ""
+  test_epochs: ""
+  skip_epoch: 1
+  gpu: 0

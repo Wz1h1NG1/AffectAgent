@@ -1,0 +1,41 @@
+# Python environments and caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+.testdeps/
+
+# Credentials and local environment
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+
+# Generated datasets, indexes, checkpoints and experiment output
+/output/
+/outputs/
+/data/
+/datasets/
+/checkpoints/
+/weights/
+/models/
+/wandb/
+/runs/
+/affectagent/artifacts/
+/retrieval/faiss/artifacts/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.log
+
+# Local editor and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
