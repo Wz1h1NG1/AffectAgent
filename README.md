@@ -152,12 +152,21 @@ They do not reproduce the paper's numbers.
 ## Citation
 
 ```bibtex
-@inproceedings{wang2026affectagent,
+@inproceedings{10.1145/3767308.3835848,
+  author    = {Wang, Zeheng and Yu, Zitong and Zhu, Yijie and Zhao, Bo and Liang, Haochen and Wang, Taorui and Xia, Wei and Zhang, Jiayu and Liu, Zhishu and Hui, Ma and Ma, Fei and Tian, Qi},
   title     = {AffectAgent: Collaborative Multi-Agent Reasoning for Retrieval-Augmented Multimodal Emotion Recognition},
-  author    = {Wang, Zeheng and Yu, Zitong and Zhu, Yijie and Zhao, Bo and Liang, Haochen and Wang, Taorui and Xia, Wei and Zhang, Jiayu and Liu, Zhishu and Ma, Hui and Ma, Fei and Tian, Qi},
-  booktitle = {Proceedings of the 34th ACM International Conference on Multimedia},
   year      = {2026},
-  doi       = {10.1145/3767308.3835848}
+  isbn      = {9798400722134},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/3767308.3835848},
+  doi       = {10.1145/3767308.3835848},
+  booktitle = {Proceedings of the 34th ACM International Conference on Multimedia},
+  pages     = {11143--11152},
+  numpages  = {10},
+  keywords  = {multimodal emotion recognition, multi-agent reasoning, retrieval-augmented generation, multi-agent reinforcement learning},
+  location  = {Rio de Janeiro, Brazil},
+  series    = {MM '26}
 }
 ```
 
